@@ -1,14 +1,14 @@
-package com.project.logibase.logibase.dto.response;
+package com.project.logibase.logibase.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Builder
-public class AuthResponse {
-    private String accessToken;
+public class IntrospectRequest {
+    String token;
 }
