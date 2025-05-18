@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -31,7 +31,7 @@ public class AuthController {
         );
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(@RequestBody AuthRequest request) {
         AuthResponse response =  authService.authenticate(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -43,7 +43,7 @@ public class AuthController {
         );
     }
 
-    @GetMapping("auth/introspect")
+    @GetMapping("/introspect")
     public ResponseEntity<ApiResponse<IntrospectResponse>> introspect(@RequestBody IntrospectRequest introspectRequest) {
         IntrospectResponse response =  authService.introspect(introspectRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(

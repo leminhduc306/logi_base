@@ -15,16 +15,15 @@ import com.project.logibase.logibase.repository.UserDetailRepository;
 import com.project.logibase.logibase.repository.UserRepository;
 import com.project.logibase.logibase.service.AuthService;
 import com.project.logibase.logibase.util.JWTUtil;
+import com.project.logibase.logibase.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 import com.project.logibase.logibase.util.PasswordEncoderUtil;
 
 import java.text.ParseException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +36,21 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new AppException(ErrorCode.USERNAME_ALREADY_EXIST);
         }
+        if (!StringUtil.isValidEmail(request.getEmail())) {
+            throw new AppException(ErrorCode.INVALID_EMAIL); // Bạn nên khai báo ErrorCode này
+        }
+        if (!StringUtil.isValidPhoneNumber(request.getPhoneNumber())) {
+            throw new AppException(ErrorCode.INVALID_PHONE_NUMBER); // Bạn nên khai báo ErrorCode này
+        }
+        if (!StringUtil.isValidPassword(request.getPassword())) {
+            throw new AppException(ErrorCode.INVALID_PASSWORD); // Bạn nên khai báo ErrorCode này
+        }
+        if (!StringUtil.isValidName(request.getFirstName())) {
+            throw new AppException(ErrorCode.INVALID_NAME);
+        }
+        if (!StringUtil.isValidName(request.getLastName())) {
+            throw new AppException(ErrorCode.INVALID_NAME);
+        }
 
         String encodedPassword = PasswordEncoderUtil.encodePassword(request.getPassword());
 
@@ -47,7 +61,6 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         userRepository.save(user);
 
-        // Tạo đối tượng UserDetail và lưu vào database
         UserDetail userDetail = UserDetail.builder()
                 .id(user.getId())
                 .address(request.getAddress())
