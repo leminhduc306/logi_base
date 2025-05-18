@@ -1,4 +1,4 @@
-package com.project.logibase.logibase.dto.response;
+package com.project.logibase.logibase.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

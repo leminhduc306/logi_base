@@ -1,0 +1,30 @@
+package com.project.logibase.logibase.dto.request;
+
+import com.project.logibase.logibase.constant.CourseStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@AllArgsConstructor
+@Getter
+@Setter
+
+public class UpdateCourseRequest {
+
+    private Long courseId;
+
+    private String title;
+
+    private String description;
+
+    private String thumbnail;
+
+    private BigDecimal price = BigDecimal.ZERO;
+
+    private CourseStatus status;
+
+
+}

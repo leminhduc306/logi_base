@@ -3,7 +3,7 @@ package com.project.logibase.logibase.controller;
 import com.project.logibase.logibase.dto.request.AuthRequest;
 import com.project.logibase.logibase.dto.request.IntrospectRequest;
 import com.project.logibase.logibase.dto.request.RegisterRequest;
-import com.project.logibase.logibase.dto.response.ApiResponse;
+import com.project.logibase.logibase.dto.api.ApiResponse;
 import com.project.logibase.logibase.dto.response.AuthResponse;
 import com.project.logibase.logibase.dto.response.IntrospectResponse;
 import com.project.logibase.logibase.service.AuthService;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    private AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<String>> register(@RequestBody RegisterRequest request) {

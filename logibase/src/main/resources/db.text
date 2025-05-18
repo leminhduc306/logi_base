@@ -16,3 +16,43 @@ CREATE TABLE user_details (
     email varchar(255) DEFAULT NULL,
     FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE courses (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(300) NOT NULL,
+    description TEXT,
+    thumbnail TEXT,
+    price DECIMAL(19, 2) NOT NULL DEFAULT 0,
+    status VARCHAR(255) DEFAULT 'DRAFT',
+    created_by VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    account_id BIGINT,
+    CONSTRAINT fk_courses_account FOREIGN KEY (account_id) REFERENCES accounts(id)
+);
+
+CREATE TABLE course_sections (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    course_id BIGINT,
+    title VARCHAR(255) NOT NULL,
+    target TEXT,
+    order_index INT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_course_sections_course FOREIGN KEY (course_id) REFERENCES courses(id)
+);
+
+CREATE TABLE course_lessons (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    course_section_id BIGINT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    video_url TEXT,
+    article TEXT,
+    duration BIGINT NOT NULL DEFAULT 0,
+    isTrial BOOLEAN NOT NULL DEFAULT FALSE,
+    order_index INT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_course_lessons_section FOREIGN KEY (course_section_id) REFERENCES course_sections(id)
+);

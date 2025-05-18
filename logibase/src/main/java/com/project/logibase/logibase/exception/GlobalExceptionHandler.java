@@ -3,7 +3,7 @@ package com.project.logibase.logibase.exception;
 
 
 import com.project.logibase.logibase.constant.ErrorCode;
-import com.project.logibase.logibase.dto.response.ApiResponse;
+import com.project.logibase.logibase.dto.api.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

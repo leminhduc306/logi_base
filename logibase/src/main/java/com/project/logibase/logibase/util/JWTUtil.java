@@ -49,18 +49,10 @@ public class JWTUtil {
 
     public boolean verifyJWT(String token)
             throws JOSEException, ParseException {
-        // Tạo một đối tượng JWSVerifier với thuật toán HMAC SHA-512 để xác minh chữ ký của JWT
         JWSVerifier verifier = new MACVerifier(signerKey.getBytes());
-
-        // Phân tích cú pháp (parse) chuỗi JWT thành đối tượng SignedJWT
         SignedJWT signedJWT = SignedJWT.parse(token);
-
-        // Lấy thời gian hết hạn của JWT từ phần claims (payload)
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
-
-        // Xác minh chữ ký của JWT, kiểm tra xem chữ ký có hợp lệ không
         var verified = signedJWT.verify(verifier);
-        // Trả về kết quả xác thực:
         return verified && expiryTime.after(new Date());
     }
 
