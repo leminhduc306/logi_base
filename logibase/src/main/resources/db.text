@@ -27,8 +27,8 @@ CREATE TABLE courses (
     created_by VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    account_id BIGINT,
-    CONSTRAINT fk_courses_account FOREIGN KEY (account_id) REFERENCES accounts(id)
+    user_id BIGINT,
+    CONSTRAINT fk_courses_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE course_sections (

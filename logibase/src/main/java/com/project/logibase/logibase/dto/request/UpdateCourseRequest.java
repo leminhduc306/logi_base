@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 
 public class UpdateCourseRequest {
 
-    private Long courseId;
 
     private String title;
 

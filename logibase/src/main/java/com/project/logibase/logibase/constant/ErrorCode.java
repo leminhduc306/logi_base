@@ -20,6 +20,7 @@ public enum ErrorCode {
     INVALID_NAME(40005, "Tên chỉ chứa kí tự thường", HttpStatus.BAD_REQUEST),
     TITLE_NOT_NULL(40006, "Tiêu đề không được để trống", HttpStatus.BAD_REQUEST),
     PRICE_LOWER_ZERO(40007,"Giá khóa học phải lớn hơn 0", HttpStatus.BAD_REQUEST),
+    COURSE_NOT_EXIST(40008, "Khóa học không tồn tại", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED(40100, "Tài khoản hoặc mật khẩu sai", HttpStatus.UNAUTHORIZED),
     INVALID_TOKEN(40101, "Token sai hoặc quá hạn", HttpStatus.UNAUTHORIZED),
     ;

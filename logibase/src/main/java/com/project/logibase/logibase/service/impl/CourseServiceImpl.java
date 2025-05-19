@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -31,12 +32,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void createCourse(CreateCourseRequest request) {
 
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if(courseRepository.existsByTitle(request.getTitle())){
             throw new AppException(ErrorCode.TITLE_ALREADY_EXIST);
         }
         if(request.getTitle() == null || request.getTitle().isEmpty()){
             throw new AppException(ErrorCode.TITLE_NOT_NULL);
         }
+
         Course course = new Course();
         course.setTitle(request.getTitle());
         course.setPrice(BigDecimal.ZERO);
@@ -46,7 +50,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseResponse updateCourse(UpdateCourseRequest request) {
+    public CourseResponse updateCourse(Long id, UpdateCourseRequest request) {
 
         if(courseRepository.existsByTitle(request.getTitle())){
             throw new AppException(ErrorCode.TITLE_ALREADY_EXIST);
@@ -58,18 +62,15 @@ public class CourseServiceImpl implements CourseService {
             throw new AppException(ErrorCode.PRICE_LOWER_ZERO);
         }
 
-        Course course = courseRepository.findById(request.getCourseId()).orElse(null);
+        Course course = courseRepository.findById(id).orElse(null);
 
-        course.setTitle(request.getTitle());
-        course.setPrice(request.getPrice());
-        course.setUpdatedAt(LocalDateTime.now());
-        course.setDescription(request.getDescription());
-        course.setThumbnail(request.getThumbnail());
+        if(course == null){
+            throw new AppException(ErrorCode.COURSE_NOT_EXIST);
+        }
 
+        courseMapper.updateCourse(course, request);
         courseRepository.save(course);
-
         return courseMapper.toCourseResponse(course);
-
     }
 
     @Override
