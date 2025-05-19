@@ -6,9 +6,11 @@ import com.project.logibase.logibase.dto.request.CreateCourseRequest;
 import com.project.logibase.logibase.dto.request.UpdateCourseRequest;
 import com.project.logibase.logibase.dto.response.CourseResponse;
 import com.project.logibase.logibase.entity.Course;
+import com.project.logibase.logibase.entity.User;
 import com.project.logibase.logibase.exception.AppException;
 import com.project.logibase.logibase.mapper.CourseMapper;
 import com.project.logibase.logibase.repository.CourseRepository;
+import com.project.logibase.logibase.repository.UserRepository;
 import com.project.logibase.logibase.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ import java.time.LocalDateTime;
 
 public class CourseServiceImpl implements CourseService {
 
+    private final UserRepository userRepository;
     private CourseRepository courseRepository;
 
     private CourseMapper courseMapper;
@@ -34,6 +37,7 @@ public class CourseServiceImpl implements CourseService {
 
         var authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        User user = userRepository.findByEmail(authentication.getName());
         if(courseRepository.existsByTitle(request.getTitle())){
             throw new AppException(ErrorCode.TITLE_ALREADY_EXIST);
         }
@@ -46,6 +50,8 @@ public class CourseServiceImpl implements CourseService {
         course.setPrice(BigDecimal.ZERO);
         course.setCreatedAt(LocalDateTime.now());
         course.setUpdatedAt(LocalDateTime.now());
+        course.setCreatedBy(user.getEmail());
+        course.setUser(user);
         courseRepository.save(course);
     }
 

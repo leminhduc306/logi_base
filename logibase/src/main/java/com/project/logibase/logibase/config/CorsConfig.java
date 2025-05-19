@@ -14,7 +14,7 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin("http://localhost:3000"); // Thay bằng URL frontend của bạn
+        config.addAllowedOrigin("http://localhost:3000");
 
         // Cho phép các phương thức HTTP
         config.addAllowedMethod("GET");

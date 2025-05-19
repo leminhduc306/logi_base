@@ -33,8 +33,8 @@ public class AuthServiceImpl implements AuthService {
     private final UserDetailRepository userDetailRepository;
     private final JWTUtil jwtUtil;
     public String register(RegisterRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) {
-            throw new AppException(ErrorCode.USERNAME_ALREADY_EXIST);
+        if(userRepository.existsByEmail(request.getEmail())) {
+            throw new AppException(ErrorCode.DUPLICATED_EMAIL); // Bạn nên khai báo ErrorCode này
         }
         if (!StringUtil.isValidEmail(request.getEmail())) {
             throw new AppException(ErrorCode.INVALID_EMAIL); // Bạn nên khai báo ErrorCode này
@@ -45,20 +45,21 @@ public class AuthServiceImpl implements AuthService {
         if (!StringUtil.isValidPassword(request.getPassword())) {
             throw new AppException(ErrorCode.INVALID_PASSWORD); // Bạn nên khai báo ErrorCode này
         }
-        if (!StringUtil.isValidName(request.getFirstName())) {
+        if (request.getFirstName() == null || request.getFirstName().isEmpty()) {
             throw new AppException(ErrorCode.INVALID_NAME);
         }
-        if (!StringUtil.isValidName(request.getLastName())) {
+        if (request.getLastName() == null || request.getLastName().isEmpty()) {
             throw new AppException(ErrorCode.INVALID_NAME);
         }
 
         String encodedPassword = PasswordEncoderUtil.encodePassword(request.getPassword());
 
         User user = User.builder()
-                .username(request.getUsername())
+                .email(request.getEmail())
                 .passwordHash(encodedPassword)
                 .role(Role.USER)
                 .build();
+
         userRepository.save(user);
 
         UserDetail userDetail = UserDetail.builder()
@@ -67,7 +68,6 @@ public class AuthServiceImpl implements AuthService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .phoneNumber(request.getPhoneNumber())
-                .email(request.getEmail())
                 .user(user)
                 .build();
 
@@ -78,7 +78,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse authenticate(AuthRequest authenticationRequest) {
-        User user = userRepository.findByUsername(authenticationRequest.getUsername());
+        User user = userRepository.findByEmail(authenticationRequest.getEmail());
 
         if(user == null || !PasswordEncoderUtil.matches(authenticationRequest.getPassword(), user.getPasswordHash())) {
             throw new AppException(ErrorCode.UNAUTHORIZED);

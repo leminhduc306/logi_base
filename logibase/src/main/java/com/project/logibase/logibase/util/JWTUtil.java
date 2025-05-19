@@ -26,13 +26,13 @@ public class JWTUtil {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getUsername())
+                .subject(user.getEmail())
                 .issuer("logibase")
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(60*60, ChronoUnit.SECONDS).toEpochMilli()
                 ))
-                .claim("role", user.getRole())
+                .claim("scope", user.getRole())
                 .build();
 
         com.nimbusds.jose.Payload payload = new com.nimbusds.jose.Payload(jwtClaimsSet.toJSONObject());

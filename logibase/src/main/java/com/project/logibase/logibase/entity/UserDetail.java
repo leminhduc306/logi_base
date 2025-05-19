@@ -26,9 +26,6 @@ public class UserDetail {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
-    private String email;
-
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
