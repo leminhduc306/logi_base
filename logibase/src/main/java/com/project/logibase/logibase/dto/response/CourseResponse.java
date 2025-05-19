@@ -3,7 +3,6 @@ package com.project.logibase.logibase.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -11,6 +10,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 
 public class CourseResponse {
     private Long id;

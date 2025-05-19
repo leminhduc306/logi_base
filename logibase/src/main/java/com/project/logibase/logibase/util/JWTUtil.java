@@ -56,4 +56,8 @@ public class JWTUtil {
         return verified && expiryTime.after(new Date());
     }
 
+    public JWTClaimsSet getClaimsFromToken(String token) throws ParseException {
+        return SignedJWT.parse(token).getJWTClaimsSet();
+    }
+
 }

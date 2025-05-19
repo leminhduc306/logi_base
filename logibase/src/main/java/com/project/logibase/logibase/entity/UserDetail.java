@@ -1,15 +1,15 @@
 package com.project.logibase.logibase.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 
 @Entity
 @Table(name = "user_details")
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
+@Getter
+@Setter
 public class UserDetail {
     @Id
     private Long id;

@@ -1,16 +1,17 @@
 package com.project.logibase.logibase.mapper;
 
 import com.project.logibase.logibase.dto.request.CreateCourseRequest;
+import com.project.logibase.logibase.dto.request.UpdateCourseRequest;
 import com.project.logibase.logibase.dto.response.CourseResponse;
 import com.project.logibase.logibase.entity.Course;
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CourseMapper {
 
     Course toCourse(CreateCourseRequest request);
-
     CourseResponse toCourseResponse(Course course);
-
+    Course toCourse(UpdateCourseRequest request);
 
 }

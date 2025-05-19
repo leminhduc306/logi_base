@@ -13,13 +13,13 @@ public class PageCustom<T> {
 
     int pageSize;
     int totalPages;
-    int totalElements;
+    long totalElements;
     int currentPage;
 
     public PageCustom(Page<T> page) {
         this.pageSize = page.getSize();
         this.totalPages = page.getTotalPages();
-        this.currentPage = page.getNumber();
-        this.totalElements = page.getNumberOfElements();
+        this.currentPage = page.getNumber() +1 ;
+        this.totalElements = page.getTotalElements();
     }
 }

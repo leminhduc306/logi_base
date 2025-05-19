@@ -2,6 +2,7 @@ package com.project.logibase.logibase.dto.request;
 
 import com.project.logibase.logibase.constant.CourseStatus;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 
 public class UpdateCourseRequest {
 
@@ -23,8 +23,5 @@ public class UpdateCourseRequest {
     private String thumbnail;
 
     private BigDecimal price = BigDecimal.ZERO;
-
-    private CourseStatus status;
-
 
 }
